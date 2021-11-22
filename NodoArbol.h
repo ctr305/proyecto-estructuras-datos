@@ -3,6 +3,7 @@
 using namespace std;
 class NodoArbol{
 	private:
+		// Datos Nodo
 		int id;
 		string proceso;
 		int memoria;
@@ -13,7 +14,7 @@ class NodoArbol{
 		NodoArbol *apuntadorI;
 		NodoArbol *apuntadorD;
 		
-		// Gestión Nodo.
+		// GestiÃ³n Nodo.
 		NodoArbol *crear(string _proceso, int _memoria, int _tiempo){
 			NodoArbol *nuevo = new NodoArbol();
 			nuevo->proceso = _proceso;
