@@ -1,9 +1,9 @@
 #include<iostream>
 #include<string.h>
+#include<sstream>
 using namespace std;
 class NodoArbol{
 	private:
-		// Datos Nodo
 		int id;
 		string proceso;
 		int memoria;
@@ -15,8 +15,9 @@ class NodoArbol{
 		NodoArbol *apuntadorD;
 		
 		// Gestión Nodo.
-		NodoArbol *crear(string _proceso, int _memoria, int _tiempo){
+		NodoArbol *crear(int _id, string _proceso, int _memoria, int _tiempo){
 			NodoArbol *nuevo = new NodoArbol();
+			nuevo->id = _id;
 			nuevo->proceso = _proceso;
 			nuevo->memoria = _memoria;
 			nuevo->tiempo = _tiempo;
@@ -75,5 +76,18 @@ class NodoArbol{
 		
 		int getTiempo(){
 			return tiempo;
+		}
+		
+		string datos(){
+			stringstream ssid, ssmemoria, sstiempo;
+			ssid<<id;
+			ssmemoria<<memoria;
+			sstiempo<<tiempo;
+			
+			string sid = ssid.str();
+			string smemoria = ssmemoria.str();
+			string stiempo = sstiempo.str();
+			
+			return "ID: " + sid + "; Nombre: " + proceso + "; Memoria: " + smemoria + "; Tiempo: " + stiempo;
 		}
 };
