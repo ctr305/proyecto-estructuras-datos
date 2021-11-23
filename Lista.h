@@ -4,57 +4,62 @@ using namespace std;
 
 class Lista{
 	private:
-		Nodo *inicio;
+		NodoLista *inicio;
 	public:
-		void Inicializar(){
+		void iniciar(){
 			inicio=NULL;
 		}
-		bool EsVacia(){
+		bool listaVacia(){
 			if(inicio == NULL){
 				return true;
 			}else
 				return false;
 		}
-		void Insertar(int num){
-			Nodo *nuevo,*aux;
-			nuevo=nuevo->Crear(num);
-			if(EsVacia()){
+		
+		NodoLista *getInicio(){
+			return inicio;
+		}
+		
+		void insertar(int id, string proceso, int memoria, int tiempo){
+			NodoLista *nuevo,*aux;
+			nuevo=nuevo->crear(id,proceso,memoria,tiempo);
+			if(listaVacia()){
 				nuevo->apuntador=NULL;
 				inicio=nuevo;
 				nuevo=NULL;
 			}
 			else{
 				aux=inicio;
-				while(aux->ObtieneApuntador() != NULL){
-					aux=aux->ObtieneApuntador();
+				while(aux->obtenerApuntador() != NULL){
+					aux=aux->obtenerApuntador();
 				}
 				nuevo->apuntador=NULL;
-				aux->Conectar(nuevo);
+				aux->conectar(nuevo);
 				aux=NULL;
 				nuevo=NULL;
 			}
 		}
-		void Eliminar(int num){
-			Nodo *borrar,*aux;
-			if(EsVacia()){
-				cout<<"La lista está vacía."<<endl;
+		void eliminar(int n){
+			NodoLista *borrar,*aux;
+			if(listaVacia()){
+				cout<<"La lista estÃ¡ vacÃ­a."<<endl;
 			}else{
 				borrar=inicio;
-				if(borrar->ObtenerDato()==num){
-					if(borrar->ObtieneApuntador()==NULL)
+				if(borrar->getId()==n){
+					if(borrar->obtenerApuntador()==NULL)
 						delete inicio;
 					else{
-						inicio=borrar->ObtieneApuntador();
+						inicio=borrar->obtenerApuntador();
 						delete borrar;
 					}
 				}else{
 					while(borrar != NULL){
-						if(borrar->ObtenerDato()!= num){
+						if(borrar->getId()!= n){
 							aux=borrar;
-							borrar=aux->ObtieneApuntador();
+							borrar=aux->obtenerApuntador();
 						}else{
-							if(borrar->ObtieneApuntador()!= NULL){
-							aux->Conectar(borrar->ObtieneApuntador());
+							if(borrar->obtenerApuntador()!= NULL){
+							aux->conectar(borrar->obtenerApuntador());
 							delete borrar;
 							borrar=NULL;
 								}else{
@@ -68,24 +73,24 @@ class Lista{
 			}
 		}
 	
-		void Buscar(int num) {
-			Nodo *aux;
+		void buscar(int n) {
+			NodoLista *aux;
 			bool existe =false;
-			if(EsVacia()){
+			if(listaVacia()){
 				cout<<"La lista esta vacia"<<endl;
 			}else{
 				aux=inicio;
 				while(aux!=NULL && existe==false){
-					if(aux->ObtenerDato()==num){
+					if(aux->getId()==n){
 						existe=true;
 						cout<<"Posicion de memoria: "<<aux<<endl;
-						cout<<"Dato guardado ["<<aux->ObtenerDato()<<"]"<<endl;
-						if(aux->ObtieneApuntador()!=NULL)
-							cout<<"Apunta a "<<aux->ObtieneApuntador()<<endl<<endl;
+						cout<<"Dato guardado ["<<aux->getId()<<"]"<<endl;
+						if(aux->obtenerApuntador()!=NULL)
+							cout<<"Apunta a "<<aux->obtenerApuntador()<<endl<<endl;
 						else
 							cout<<"Final de la lista "<<endl;
 					}else{
-						aux=aux->ObtieneApuntador();
+						aux=aux->obtenerApuntador();
 					}
 				}
 				if(existe==false)
@@ -93,24 +98,47 @@ class Lista{
 			}
 		}
 		
-		void Recorrer(){
-			Nodo *aux;
-			if(EsVacia())
+		void recorrer(){
+			NodoLista *aux;
+			if(listaVacia())
 				cout<<"Lista vacia"<<endl;
 			else{
 				aux=inicio;
 				while(aux != NULL ){
-					cout<<"Posicion de memoria "<<aux<<endl;
-					cout<<"Dato guardado "<<aux->ObtenerDato()<<endl;
-					if(aux->ObtenerDato() !=NULL){
-						cout<<"Apunta a: "<<aux->ObtieneApuntador()<<endl;
+					cout<<"Posicion de memoria: "<<aux<<endl;
+					cout<<aux->datos()<<endl;
+					if(aux->obtenerApuntador()!=NULL){
+						cout<<"Apunta a: "<<aux->obtenerApuntador()<<endl;
 						cout<<endl;
 					}else{
-						cout<<"Final de la lista"<<endl;
+						cout<<"Final de la lista. "<<endl;
 						cout<<endl;
 					}
-					aux=aux->ObtieneApuntador();
+					aux=aux->obtenerApuntador();
 				}
+			}
+		}
+		
+		NodoLista *last(){
+			NodoLista *aux;
+			if(listaVacia()){
+				cout<<"Lista vacia"<<endl;
+			}else{
+				aux = inicio;
+				while(aux->obtenerApuntador()!=NULL){
+					aux=aux->obtenerApuntador();
+				}
+				
+				return aux;
+			}
+		}
+		
+		int mostrar(NodoLista *aux){
+			if(listaVacia() || aux==NULL){
+				return -1;
+			}else{
+				cout<<aux->datos()<<endl;
+				mostrar(aux->obtenerApuntador());
 			}
 		}
 };
