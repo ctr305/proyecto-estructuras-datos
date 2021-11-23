@@ -2,6 +2,7 @@
 #include "NodoArbol.h"
 #include<windows.h>
 #include<stdio.h>
+
 class Arbol{
 
 	private:
@@ -10,7 +11,7 @@ class Arbol{
 	
 	public:
 	
-		void Inicializar(){ 
+		void inicializar(){ 
 			this->raiz=NULL;
 		}
 		
@@ -18,43 +19,53 @@ class Arbol{
 			return raiz;
 		}
 		
-		void AgregarNodo(string _proceso, int _memoria, int _tiempo) {//crear un nuevo nodo;
+		void agregar(int id, string proceso, int memoria, int tiempo) {//crear un nuevo nodo;
 			
 			NodoArbol *nuevo = new NodoArbol();
-			nuevo = nuevo->crear(_proceso, _memoria, _tiempo);
+			nuevo = nuevo->crear(id, proceso, memoria, tiempo);
 			
 
-			if (raiz == NULL) { //arbol vacío;
+			if (raiz == NULL) { //arbol vacÃ­o;
 				raiz = nuevo;
 			}else 
-				NextNodo(raiz, nuevo);
+				nextNodo(raiz, nuevo);
 		}
 		
-		void GetArbol(NodoArbol *raiz, int cont){
+		void getArbol(NodoArbol *raiz, int cont){
 			if(raiz == NULL){
 				return;
 			}else{
-				GetArbol(raiz->getApuntadorD(), cont + 1);
+				getArbol(raiz->getApuntadorD(), cont + 1);
 				for(int i = 0; i <cont; i++){
 					cout<<"    ";
 				}
 				cout<<raiz->getId()<<endl;
-				GetArbol(raiz->getApuntadorI(), cont + 1);
+				getArbol(raiz->getApuntadorI(), cont + 1);
 			}
 		}
 		
-				int x = 0;
-		void MostrarArbol(NodoArbol *aux, int y){//muestra el arbol en forma;
-			if(aux == NULL){
-				return;
+		
+		void mostrarArbol(NodoArbol *raiz, int x, int y, int izq){
+			if(raiz==NULL){
+				
 			}else{
-				x+=3;
-				MostrarArbol(aux->getApuntadorI(), y+2);
-				gotoxy(x, y);
-				cout<<aux->getId()<<"\n";
-				MostrarArbol(aux->getApuntadorD(), y+2);
-				cout<<"\n";
+				gotoxy(x,y);
+				cout<<raiz->getId();
+				if(izq==1){
+					mostrarArbol(raiz->getApuntadorD(),x-20,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorI(),x+20,y+3,izq+1);
+				}else if(izq==2){
+					mostrarArbol(raiz->getApuntadorD(),x-10,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorI(),x+10,y+3,izq+1);
+				}else if(izq==3){
+					mostrarArbol(raiz->getApuntadorD(),x-4,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorI(),x+4,y+3,izq+1);
+				}else{
+					mostrarArbol(raiz->getApuntadorD(),x-2,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorI(),x+2,y+3,izq+1);
+				}
 			}
+			cout<<endl;
 		}
 		
 		void gotoxy(int x,int y){  //funcion para usar coordenadas y hubicar nuestro arbol;
@@ -68,13 +79,13 @@ class Arbol{
 		
 
 		
-		void NextNodo(NodoArbol* aux, NodoArbol* nuevo) {//apunta al sig. nodo;
+		void nextNodo(NodoArbol* aux, NodoArbol* nuevo) {//apunta al sig. nodo;
 			if (aux == NULL)
 				return;
 			else {
 				if (nuevo->getId() < aux->getId()) {
 					if (aux->getApuntadorI() != NULL)
-						NextNodo(aux->getApuntadorI(), nuevo);
+						nextNodo(aux->getApuntadorI(), nuevo);
 					else{
 						aux->setApuntadorI(nuevo);
 						nuevo->setPadre(aux);
@@ -83,7 +94,7 @@ class Arbol{
 				}
 				else if (nuevo->getId() > aux->getId()) { 
 					if (aux->getApuntadorD() != NULL)
-						NextNodo(aux->getApuntadorD(), nuevo);
+						nextNodo(aux->getApuntadorD(), nuevo);
 					else{
 						aux->setApuntadorD(nuevo);
 						nuevo->setPadre(aux);
@@ -96,7 +107,7 @@ class Arbol{
 
 
 
-		NodoArbol *BuscarNodo(NodoArbol *aux, int n){
+		NodoArbol *buscarNodo(NodoArbol *aux, int n){
 			if(aux==NULL){
 				return NULL;
 			}
@@ -104,19 +115,19 @@ class Arbol{
 				return aux;
 			}
 			if(n<aux->getId()){
-				return BuscarNodo(aux->getApuntadorI(),n);
+				return buscarNodo(aux->getApuntadorI(),n);
 			}else{
-				return BuscarNodo(aux->getApuntadorD(),n);
+				return buscarNodo(aux->getApuntadorD(),n);
 			}	
 		}
 
-	    void Orden(NodoArbol *aux){
+	    void orden(NodoArbol *aux){
 	    	if(aux==NULL){
 				return;
 			}else{
-				Orden(aux->getApuntadorI());
+				orden(aux->getApuntadorI());
 				cout<<aux->getId()<<endl;
-				Orden(aux->getApuntadorD());
+				orden(aux->getApuntadorD());
 			}
 		}
 		
