@@ -6,7 +6,7 @@ class Cola{
 		// Datos de un elemento.
 		NodoCola *inicio;
 		
-		// Cola vacía.
+		// Cola vacÃ­a.
 		bool colaVacia(){
 			if(inicio==NULL){
 				return true;
@@ -15,7 +15,7 @@ class Cola{
 			}
 		}
 		
-		// Reordenar elementos tras eliminación.
+		// Reordenar elementos tras eliminaciÃ³n.
 		NodoCola reordenarCola(NodoCola *aux){
 			// Caso base.
 			if(aux->obtenerApuntador()==NULL){
