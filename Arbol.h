@@ -2,7 +2,7 @@
 #include "NodoArbol.h"
 #include<windows.h>
 #include<stdio.h>
-
+#include<sstream>
 class Arbol{
 
 	private:
@@ -121,4 +121,16 @@ class Arbol{
 			}
 		}
 		
+	string datos(){
+			stringstream ssid, ssmemoria, sstiempo;
+			ssid<<id;
+			ssmemoria<<memoria;
+			sstiempo<<tiempo;
+			
+			string sid = ssid.str();
+			string smemoria = ssmemoria.str();
+			string stiempo = sstiempo.str();
+			
+			return "ID: " + sid + "; Nombre: " + proceso + "; Memoria: " + smemoria + "; Tiempo: " + stiempo;
+		}
 };
