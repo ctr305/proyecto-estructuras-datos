@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string.h>
+#include<sstream>
 using namespace std;
 class NodoLista{
 	private:
@@ -11,7 +12,7 @@ class NodoLista{
 	public:
 		NodoLista *apuntador;
 		
-		// Gestión Nodo.
+		// GestiÃ³n Nodo.
 		NodoLista *crear(int _id, string _proceso, int _memoria, int _tiempo){
 			NodoLista *nuevo = new NodoLista();
 			nuevo->id = _id;
@@ -25,7 +26,7 @@ class NodoLista{
 			apuntador = siguiente;
 		}
 		
-		void *obtenerApuntador(){
+		NodoLista *obtenerApuntador(){
 			return apuntador;
 		}
 		
@@ -58,5 +59,18 @@ class NodoLista{
 		
 		int getTiempo(){
 			return tiempo;
+		}
+		
+		string datos(){
+			stringstream ssid, ssmemoria, sstiempo;
+			ssid<<id;
+			ssmemoria<<memoria;
+			sstiempo<<tiempo;
+			
+			string sid = ssid.str();
+			string smemoria = ssmemoria.str();
+			string stiempo = sstiempo.str();
+			
+			return "ID: " + sid + "; Nombre: " + proceso + "; Memoria: " + smemoria + "; Tiempo: " + stiempo;
 		}
 };
