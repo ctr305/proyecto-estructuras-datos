@@ -12,7 +12,7 @@ class NodoCola{
 	public:
 		NodoCola *apuntador;
 		
-		// Gestión Nodo.
+		// GestiÃ³n Nodo.
 		NodoCola *crear(int _id, string _proceso, int _memoria, int _tiempo){
 			NodoCola *nuevo = new NodoCola();
 			nuevo->id = _id;
