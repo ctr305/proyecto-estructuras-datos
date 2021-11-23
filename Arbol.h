@@ -1,4 +1,3 @@
-
 #include<iostream>
 #include "NodoArbol.h"
 #include<windows.h>
@@ -8,7 +7,7 @@ class Arbol{
 
 	private:
 		
-NodoArbol *raiz;	
+		NodoArbol *raiz;	
 	
 	public:
 	
