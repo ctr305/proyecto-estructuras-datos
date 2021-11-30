@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include <unistd.h>
 
 int getDigits(int i);
@@ -9,9 +10,10 @@ std::string displayMin, displaySeg;
 std::string ReturnTime(int temp){
   std::string time="";
 
-  if(temp%60==0){
-    min = temp/60;
-  }
+
+  float minAux = temp/60;
+  min = std::floor(minAux);
+
   seg=temp-(min*60);
 
   if(min>99){
