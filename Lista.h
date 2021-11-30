@@ -5,6 +5,7 @@ using namespace std;
 class Lista{
 	private:
 		NodoLista *inicio;
+		
 	public:
 		void iniciar(){
 			inicio=NULL;
@@ -20,9 +21,9 @@ class Lista{
 			return inicio;
 		}
 		
-		void insertar(int id, string proceso, int memoria, int tiempo){
+		void insertar(int id, string proceso, int memoria, int tiempo, int gestion){
 			NodoLista *nuevo,*aux;
-			nuevo=nuevo->crear(id,proceso,memoria,tiempo);
+			nuevo=nuevo->crear(id,proceso,memoria,tiempo, gestion);
 			if(listaVacia()){
 				nuevo->apuntador=NULL;
 				inicio=nuevo;
@@ -39,84 +40,42 @@ class Lista{
 				nuevo=NULL;
 			}
 		}
-		void eliminar(int n){
-			NodoLista *borrar,*aux;
+		
+		void eliminar(int tiempo){
+			NodoLista *borrar; NodoLista *aux=NULL;
 			if(listaVacia()){
-				cout<<"La lista está vacía."<<endl;
+				cout<<"La lista esta vacia."<<endl;
 			}else{
-				borrar=inicio;
-				if(borrar->getId()==n){
-					if(borrar->obtenerApuntador()==NULL)
-						delete inicio;
-					else{
-						inicio=borrar->obtenerApuntador();
+				borrar = inicio;
+				while((borrar->obtenerApuntador() != NULL) && (borrar->i()!=tiempo)){
+					aux = borrar;
+					borrar = borrar->obtenerApuntador();
+				}
+				if(borrar==NULL){
+					
+				}else{
+					if(aux==NULL){
+						inicio = inicio->obtenerApuntador();
+						delete borrar;
+					}else{
+						aux->conectar(borrar->obtenerApuntador());
 						delete borrar;
 					}
-				}else{
-					while(borrar != NULL){
-						if(borrar->getId()!= n){
-							aux=borrar;
-							borrar=aux->obtenerApuntador();
-						}else{
-							if(borrar->obtenerApuntador()!= NULL){
-							aux->conectar(borrar->obtenerApuntador());
-							delete borrar;
-							borrar=NULL;
-								}else{
-									delete borrar;
-									borrar=NULL;
-								}
-							}
-					}
-				
 				}
 			}
 		}
 	
-		void buscar(int n) {
+		NodoLista *buscar(int tiempo) {
 			NodoLista *aux;
-			bool existe =false;
 			if(listaVacia()){
 				cout<<"La lista esta vacia"<<endl;
 			}else{
 				aux=inicio;
-				while(aux!=NULL && existe==false){
-					if(aux->getId()==n){
-						existe=true;
-						cout<<"Posicion de memoria: "<<aux<<endl;
-						cout<<"Dato guardado ["<<aux->getId()<<"]"<<endl;
-						if(aux->obtenerApuntador()!=NULL)
-							cout<<"Apunta a "<<aux->obtenerApuntador()<<endl<<endl;
-						else
-							cout<<"Final de la lista "<<endl;
-					}else{
-						aux=aux->obtenerApuntador();
-					}
-				}
-				if(existe==false)
-					cout<<"Dato no encontrado en la lista"<<endl;
-			}
-		}
-		
-		void recorrer(){
-			NodoLista *aux;
-			if(listaVacia())
-				cout<<"Lista vacia"<<endl;
-			else{
-				aux=inicio;
-				while(aux != NULL ){
-					cout<<"Posicion de memoria: "<<aux<<endl;
-					cout<<aux->datos()<<endl;
-					if(aux->obtenerApuntador()!=NULL){
-						cout<<"Apunta a: "<<aux->obtenerApuntador()<<endl;
-						cout<<endl;
-					}else{
-						cout<<"Final de la lista. "<<endl;
-						cout<<endl;
-					}
-					aux=aux->obtenerApuntador();
+				while(aux->obtenerApuntador()!=NULL && aux->i()!=tiempo){
+					aux = aux->obtenerApuntador();
 				}
 			}
+			return aux;
 		}
 		
 		NodoLista *last(){
@@ -128,17 +87,98 @@ class Lista{
 				while(aux->obtenerApuntador()!=NULL){
 					aux=aux->obtenerApuntador();
 				}
-				
 				return aux;
 			}
 		}
 		
 		int mostrar(NodoLista *aux){
-			if(listaVacia() || aux==NULL){
+			if(aux==NULL){
 				return -1;
 			}else{
 				cout<<aux->datos()<<endl;
 				mostrar(aux->obtenerApuntador());
+			}
+		}
+		
+		int ram(int suma){
+			NodoLista *aux;
+			if(listaVacia()){
+				
+			}else{
+				aux = inicio;
+				do{
+					suma = suma + aux->getMemoria();
+					aux = aux->obtenerApuntador();
+				}while(aux!=NULL);
+			}
+			return suma;
+		}
+		
+		bool tiempoIgual(int n){
+			NodoLista *aux;
+			if(listaVacia()){
+				cout<<"La lista esta vacia"<<endl;
+			}else{
+				aux=inicio;
+				while(aux!=NULL && aux->getTiempo()!=n){
+					aux = aux->obtenerApuntador();
+				}
+				
+				if(aux==NULL){
+					
+				}else{
+					if(aux->getTiempo()==n){
+						return true;
+					}else{
+						if(aux->getTiempo()!=n){
+							return false;
+						}
+					}
+				}
+			}
+		}
+		
+		bool ramEx(int memoria, int r){
+			if(memoria+ram(0)<=r){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		int menor(){
+			int minimo;
+			NodoLista *aux;
+			if(listaVacia()){
+				
+			}else{
+				aux = inicio;
+				minimo = aux->i();
+				while(aux!=NULL){
+					if(aux->i()<minimo){
+						minimo = aux->i();
+					}
+					aux = aux->obtenerApuntador();
+				}
+			}
+			return minimo;
+		}
+		
+		int repeticiones(int minimo){
+			int c;
+			NodoLista *aux;
+			if(listaVacia()){
+				
+			}else{
+				aux = inicio;
+				c=0;
+				while(aux!=NULL){
+					if(aux->i()==minimo){
+						++c;
+					}
+					aux = aux->obtenerApuntador();
+				}
+				return c;
 			}
 		}
 };

@@ -6,7 +6,7 @@ class Cola{
 		// Datos de un elemento.
 		NodoCola *inicio;
 		
-		// Cola vacÃ­a.
+		// Cola vacía.
 		bool colaVacia(){
 			if(inicio==NULL){
 				return true;
@@ -15,7 +15,7 @@ class Cola{
 			}
 		}
 		
-		// Reordenar elementos tras eliminaciÃ³n.
+		// Reordenar elementos tras eliminación.
 		NodoCola reordenarCola(NodoCola *aux){
 			// Caso base.
 			if(aux->obtenerApuntador()==NULL){
@@ -34,9 +34,9 @@ class Cola{
 		}
 		
 		// Insertar elemento a cola.
-		int push(int id, string proceso, int memoria, int tiempo){
+		int push(int id, string proceso, int memoria, int tiempo, int gestion){
 			NodoCola *nuevo; NodoCola *aux;
-			nuevo = nuevo->crear(id, proceso, memoria, tiempo);
+			nuevo = nuevo->crear(id, proceso, memoria, tiempo, gestion);
 			
 			if(colaVacia()){
 				nuevo->apuntador = NULL;

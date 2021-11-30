@@ -8,19 +8,20 @@ class NodoArbol{
 		string proceso;
 		int memoria;
 		int tiempo;
-		
+		int gestion;
 	public:
 		NodoArbol *padre;
 		NodoArbol *apuntadorI;
 		NodoArbol *apuntadorD;
 		
-		// GestiÃ³n Nodo.
-		NodoArbol *crear(int _id, string _proceso, int _memoria, int _tiempo){
+		// Gestión Nodo.
+		NodoArbol *crear(int _id, string _proceso, int _memoria, int _tiempo, int _gestion){
 			NodoArbol *nuevo = new NodoArbol();
 			nuevo->id = _id;
 			nuevo->proceso = _proceso;
 			nuevo->memoria = _memoria;
 			nuevo->tiempo = _tiempo;
+			nuevo->gestion = _gestion;
 			return nuevo;
 		}
 		
@@ -76,6 +77,10 @@ class NodoArbol{
 		
 		int getTiempo(){
 			return tiempo;
+		}
+		
+		int getGestion(){
+			return gestion;
 		}
 		
 		string datos(){

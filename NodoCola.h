@@ -8,17 +8,18 @@ class NodoCola{
 		string proceso;
 		int memoria;
 		int tiempo;
-	
+		int gestion;
 	public:
 		NodoCola *apuntador;
 		
-		// GestiÃ³n Nodo.
-		NodoCola *crear(int _id, string _proceso, int _memoria, int _tiempo){
+		// Gestión Nodo.
+		NodoCola *crear(int _id, string _proceso, int _memoria, int _tiempo, int _gestion){
 			NodoCola *nuevo = new NodoCola();
 			nuevo->id = _id;
 			nuevo->proceso = _proceso;
 			nuevo->memoria = _memoria;
 			nuevo->tiempo = _tiempo;
+			nuevo->gestion = _gestion;
 		}
 		
 		void *conectar(NodoCola * siguiente){
@@ -57,6 +58,10 @@ class NodoCola{
 		
 		int getTiempo(){
 			return tiempo;
+		}
+		
+		int getGestion(){
+			return gestion;
 		}
 		
 		string datos(){

@@ -19,16 +19,17 @@ class Arbol{
 			return raiz;
 		}
 		
-		void agregar(int id, string proceso, int memoria, int tiempo) {//crear un nuevo nodo;
+		void agregar(int id, string proceso, int memoria, int tiempo, int gestion) {//crear un nuevo nodo;
 			
 			NodoArbol *nuevo = new NodoArbol();
-			nuevo = nuevo->crear(id, proceso, memoria, tiempo);
+			nuevo = nuevo->crear(id, proceso, memoria, tiempo, gestion);
 			
 
-			if (raiz == NULL) { //arbol vacÃ­o;
+			if (raiz == NULL) { //arbol vacío;
 				raiz = nuevo;
-			}else 
+			}else{
 				nextNodo(raiz, nuevo);
+			}
 		}
 		
 		void getArbol(NodoArbol *raiz, int cont){
@@ -39,7 +40,7 @@ class Arbol{
 				for(int i = 0; i <cont; i++){
 					cout<<"    ";
 				}
-				cout<<raiz->getId()<<endl;
+				cout<<raiz->getTiempo()<<endl;
 				getArbol(raiz->getApuntadorI(), cont + 1);
 			}
 		}
@@ -50,19 +51,19 @@ class Arbol{
 				
 			}else{
 				gotoxy(x,y);
-				cout<<raiz->getId();
+				cout<<raiz->getTiempo();
 				if(izq==1){
-					mostrarArbol(raiz->getApuntadorD(),x-20,y+3,izq+1);
-					mostrarArbol(raiz->getApuntadorI(),x+20,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorD(),x+20,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorI(),x-20,y+3,izq+1);
 				}else if(izq==2){
-					mostrarArbol(raiz->getApuntadorD(),x-10,y+3,izq+1);
-					mostrarArbol(raiz->getApuntadorI(),x+10,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorD(),x+10,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorI(),x-10,y+3,izq+1);
 				}else if(izq==3){
-					mostrarArbol(raiz->getApuntadorD(),x-4,y+3,izq+1);
-					mostrarArbol(raiz->getApuntadorI(),x+4,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorD(),x+4,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorI(),x-4,y+3,izq+1);
 				}else{
-					mostrarArbol(raiz->getApuntadorD(),x-2,y+3,izq+1);
-					mostrarArbol(raiz->getApuntadorI(),x+2,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorD(),x+2,y+3,izq+1);
+					mostrarArbol(raiz->getApuntadorI(),x-2,y+3,izq+1);
 				}
 			}
 			cout<<endl;
@@ -83,23 +84,22 @@ class Arbol{
 			if (aux == NULL)
 				return;
 			else {
-				if (nuevo->getId() < aux->getId()) {
-					if (aux->getApuntadorI() != NULL)
+				if (nuevo->getTiempo() <= aux->getTiempo()) {
+					if (aux->getApuntadorI() != NULL){
 						nextNodo(aux->getApuntadorI(), nuevo);
-					else{
+					}else{
 						aux->setApuntadorI(nuevo);
 						nuevo->setPadre(aux);
 					}
 						
 				}
-				else if (nuevo->getId() > aux->getId()) { 
-					if (aux->getApuntadorD() != NULL)
+				else if (nuevo->getTiempo() > aux->getTiempo()) { 
+					if (aux->getApuntadorD() != NULL){
 						nextNodo(aux->getApuntadorD(), nuevo);
-					else{
+					}else{
 						aux->setApuntadorD(nuevo);
 						nuevo->setPadre(aux);
-					}
-						
+					}		
 				}
 			}
 		}
