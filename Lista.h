@@ -182,13 +182,13 @@ class Lista{
 			}
 		}
 
-	NodoLista *getNodo(NodoLista *aux, int id){
+	NodoLista *getNodo(NodoLista *aux, int num, int cont){
 		if(aux!=NULL){
-			if(aux->getId()==id){
+			if(cont==num){
 				return aux;
 			}else{
 				aux=aux->obtenerApuntador();
-				return getNodo(aux,id);
+				return getNodo(aux,num,cont+1);
 			}
 		}else{
 			return NULL;
