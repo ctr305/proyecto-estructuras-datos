@@ -1,10 +1,12 @@
 #include<iostream>
 #include"NodoCola.h"
+#include"Reloj.h"
 using namespace std;
 class Cola{
 	private:
 		// Datos de un elemento.
 		NodoCola *inicio;
+		int tiempoProceso;
 		
 		// Cola vacía.
 		bool colaVacia(){
@@ -76,16 +78,67 @@ class Cola{
 			}
 		}
 		
+		int returnTareasCola(NodoCola *aux,int cont){
+			if(aux==NULL){
+				return cont;
+			}else{
+				returnTareasCola(aux->obtenerApuntador(), cont+1);
+			}
+		}
+		
+		
 		NodoCola *getInicio(){
 			return inicio;
 		}
 		
-		int mostrar(NodoCola *aux){
+		int mostrarToda(NodoCola *aux){
 			if(colaVacia() || aux==NULL){
 				return -1;
 			}else{
-				cout<<aux->datos()<<endl;
+				cout<<"Tarea: "<<aux->getProceso();cout<<"(";cout<<aux->getMemoria();cout<<" MB)"<<endl;
+				
 				mostrar(aux->obtenerApuntador());
+			}
+		}
+		
+		int mostrarInformacion(NodoCola *aux){
+			if(aux==NULL){
+				
+			}else{
+				aux->datos(); cout<<endl;
+				mostrarInformacion(aux->obtenerApuntador());
+			}
+		}
+		
+		NodoCola *getNodo(NodoCola *aux, int num, int cont){
+		if(aux!=NULL){
+			if(cont==num){
+				return aux;
+			}else{
+				aux=aux->obtenerApuntador();
+				return getNodo(aux,num,cont+1);
+			}
+		}else{
+			return NULL;
+			}
+		}
+		
+		
+		int mostrar(NodoCola *aux){
+			if(aux==NULL){
+				return -1;
+			}else{
+				cout<<"Tarea: "<<aux->getProceso();cout<<"(";cout<<aux->getMemoria();cout<<" MB)"<<endl;
+
+			}
+		}
+	
+		string mostrarTiempo(NodoCola *aux){
+			if(aux==NULL){
+				return "";
+			}else{
+				tiempoProceso=aux->getTiempo();
+				return "Tiempo: "+ReturnTime(tiempoProceso);
 			}
 		}
 };

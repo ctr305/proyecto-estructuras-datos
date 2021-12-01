@@ -5,6 +5,7 @@ using namespace std;
 class Lista{
 	private:
 		NodoLista *inicio;
+		int tiempoProceso;
 		
 	public:
 		void iniciar(){
@@ -44,7 +45,7 @@ class Lista{
 		void eliminar(int tiempo){
 			NodoLista *borrar; NodoLista *aux=NULL;
 			if(listaVacia()){
-				cout<<"La lista esta vacia."<<endl;
+				cout<<"La lista esta vacia. Eliminar"<<endl;
 			}else{
 				borrar = inicio;
 				while((borrar->obtenerApuntador() != NULL) && (borrar->i()!=tiempo)){
@@ -68,7 +69,7 @@ class Lista{
 		NodoLista *buscar(int tiempo) {
 			NodoLista *aux;
 			if(listaVacia()){
-				cout<<"La lista esta vacia"<<endl;
+				cout<<"La lista esta vacia Buscar"<<endl;
 			}else{
 				aux=inicio;
 				while(aux->obtenerApuntador()!=NULL && aux->i()!=tiempo){
@@ -91,12 +92,59 @@ class Lista{
 			}
 		}
 		
+		int mostrarToda(NodoLista *aux){
+			if(aux==NULL){
+				return -1;
+			}else{
+				cout<<"Tarea: "<<aux->getProceso();cout<<"(";cout<<aux->getMemoria();cout<<" MB)"<<endl;
+				mostrar(aux->obtenerApuntador());
+			}
+		}
+		
+		int mostrarInformacion(NodoLista *aux){
+			if(aux==NULL){
+				return -1;
+			}else{
+				cout<<aux->datos();cout<<endl;
+				mostrarInformacion(aux->obtenerApuntador());
+			}
+		}
+		
 		int mostrar(NodoLista *aux){
 			if(aux==NULL){
 				return -1;
 			}else{
-				cout<<aux->datos()<<endl;
-				mostrar(aux->obtenerApuntador());
+				cout<<"Tarea: "<<aux->getProceso();cout<<"(";cout<<aux->getMemoria();cout<<" MB)"<<endl;
+			}
+		}
+		
+		string mostrarTiempo(NodoLista *aux){
+			if(aux==NULL){
+				return "";
+			}else{
+				tiempoProceso=aux->getTiempo();
+				return "Tiempo: "+ReturnTime(tiempoProceso);
+			}
+		}
+		
+		NodoLista *getNodo(NodoLista *aux, int num, int cont){
+		if(aux!=NULL){
+			if(cont==num){
+				return aux;
+			}else{
+				aux=aux->obtenerApuntador();
+				return getNodo(aux,num,cont+1);
+			}
+		}else{
+			return NULL;
+		}
+	}
+		
+		int returnTareas(NodoLista *aux,int cont){
+			if(aux==NULL){
+				return cont;
+			}else{
+				returnTareas(aux->obtenerApuntador(), cont+1);
 			}
 		}
 		
@@ -164,6 +212,24 @@ class Lista{
 			return minimo;
 		}
 		
+		int num(int menor){
+			int cont=0;
+			NodoLista *aux;
+			cout<<"hola";
+			if(listaVacia()){
+				
+			}else{
+				aux = inicio;
+				while(aux!=NULL && aux->i()!=menor){
+					cont++;
+					cout<<cont;
+					aux = aux->obtenerApuntador();
+				}
+			}
+			return cont;
+		}
+		
+		
 		int repeticiones(int minimo){
 			int c;
 			NodoLista *aux;
@@ -181,17 +247,4 @@ class Lista{
 				return c;
 			}
 		}
-
-	NodoLista *getNodo(NodoLista *aux, int num, int cont){
-		if(aux!=NULL){
-			if(cont==num){
-				return aux;
-			}else{
-				aux=aux->obtenerApuntador();
-				return getNodo(aux,num,cont+1);
-			}
-		}else{
-			return NULL;
-		}
-	}
 };

@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string.h>
 #include<sstream>
+
 using namespace std;
 class NodoLista{
 	private:
@@ -83,6 +84,6 @@ class NodoLista{
 			string stiempo = sstiempo.str();
 			string sgestion = ssgestion.str();
 			
-			return "ID: " + sid + "; Nombre: " + proceso + "; Memoria: " + smemoria + "; Tiempo: " + stiempo + "; i: " + sgestion;
+			return "ID: " + sid + "; Nombre: " + proceso + "; Memoria: " + smemoria + "; Tiempo: " + stiempo;
 		}
 };

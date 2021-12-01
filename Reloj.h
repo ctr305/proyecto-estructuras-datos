@@ -1,29 +1,27 @@
 #include <iostream>
-#include <cmath>
 #include <unistd.h>
-
+#include <cmath>
 int getDigits(int i);
 
-int min = 0, seg = 0, digitsMin, digitsSeg;
+int minutos = 0, seg = 0, digitsMin, digitsSeg;
 std::string displayMin, displaySeg;
 
 std::string ReturnTime(int temp){
   std::string time="";
 
-
   float minAux = temp/60;
-  min = std::floor(minAux);
+  minutos = std::floor(minAux);
 
-  seg=temp-(min*60);
+  seg=temp-(minutos*60);
 
-  if(min>99){
-    min=99;
+  if(minutos>99){
+    minutos=99;
   }
 
-  if(getDigits(min)<2){
-    time+="0"+std::to_string(min);
+  if(getDigits(minutos)<2){
+    time+="0"+std::to_string(minutos);
   }else{
-    time+=std::to_string(min);
+    time+=std::to_string(minutos);
   }
 
   time+=":";

@@ -6,9 +6,11 @@
 #include"Cola.h"
 #include"Lista.h"
 #include"Arbol.h"
+#include <windows.h> 
 using namespace std;
 
 int const RAM = 8192;
+
 
 // Vectores.
 string nombres[] = {"Teams","Chrome","PDF","SQL Server",
@@ -16,6 +18,20 @@ string nombres[] = {"Teams","Chrome","PDF","SQL Server",
 	"Store","PSeInt","Skype","Acess","Cortana","Calendario","Fotos",
 	"Outlook","Netflix"};	
 int memoria[] = {1024,2048,5120};
+
+void gotoxy(int x,int y){  
+      HANDLE hcon;  
+      hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
+      COORD dwPos;  
+      dwPos.X = x;  
+      dwPos.Y= y;  
+      SetConsoleCursorPosition(hcon,dwPos);  
+ }  
+ 
+ 	void textcolor(int color) { 
+	HANDLE h=GetStdHandle(STD_OUTPUT_HANDLE); 
+    SetConsoleTextAttribute(h,color); 
+	}
 
 // Funciones.
 int tiempoLista(int *tiempo);
@@ -29,13 +45,19 @@ Lista lista;
 Cola cola;
 Arbol arbol;
 
-
 // Tiempo global.
 int tiempo=0;
 int tiempoL=0;
 
 // Tiempo de cambio.
 int tim=0;
+
+//Veces limite
+int contLimite=0;
+
+// Numero Tareas
+int numTareasProcesamiento=0;
+int numTareasCola=0;
 
 // Identificador de cambio.
 int identi=0;
@@ -52,6 +74,9 @@ int gest=0;
 // Memoria.
 int memory=0;
 
+//Tiempo-i
+int restaTiempo=0;
+
 int main(){
 	// Crear arreglos.
 	cola.iniciar();
@@ -62,8 +87,10 @@ int main(){
 	
 	system("cls"); cout<<"RAM: "<<lista.ram(0)<<endl;
 	
+	
+	
 	cout<<"LISTA:"<<endl;
-	lista.mostrar(lista.getInicio());
+	lista.mostrarToda(lista.getInicio());
 	
 	cout<<"COLA:"<<endl;
 	cola.mostrar(cola.getInicio());
@@ -105,9 +132,7 @@ void loop(int i, int j){
 	if(i==j){
 		
 	}else{
-		system("cls");
-		cout<<i<<endl<<endl;
-	
+
 		if(tiempo==0){
 			tiempoProceso(&tiempo);
 		}else{
@@ -123,8 +148,8 @@ void loop(int i, int j){
 				}	
 			}
 			
-			
-			if(lista.getInicio()!=NULL && lista.menor()==i){	
+
+			if(lista.last()!=NULL && lista.menor()==i){	
 				for(int j=0;j<=lista.repeticiones(i);j++){
 					identi = lista.buscar(i)->getId();
 					name = lista.buscar(i)->getProceso();
@@ -135,29 +160,140 @@ void loop(int i, int j){
 					arbol.agregar(identi,name,memo,tim, gest);
 					
 					lista.eliminar(i);
-				}	
+				}
+					
 			}
 			
 			if(cola.getInicio()!=NULL){
-				memory = cola.getInicio()->getMemoria();
-				tim = cola.getInicio()->getTiempo();
+					memory = cola.getInicio()->getMemoria();
+					tim = cola.getInicio()->getTiempo();
 				
-				if(lista.ramEx(memory,RAM)){
-					identi = cola.getInicio()->getId();
-					name = cola.getInicio()->getProceso();
-					lista.insertar(identi,name,memory,tim,i);
-					cola.pop();
+					if(lista.ramEx(memory,RAM)){
+						identi = cola.getInicio()->getId();
+						name = cola.getInicio()->getProceso();
+						lista.insertar(identi,name,memory,tim,i);
+						cola.pop();
+					}
 				}
-			}
+			
 		}
 		
 		cout<<"RAM: "<<lista.ram(0)<<endl;
 	
 		cout<<"LISTA:"<<endl;
-		lista.mostrar(lista.getInicio());
-	
+		lista.mostrarInformacion(lista.getInicio());
+		
 		cout<<"COLA:"<<endl;
-		cola.mostrar(cola.getInicio());
+		cola.mostrarInformacion(cola.getInicio());
+		restaTiempo=tiempo-i;
+		
+		cout<<"CONTADOR TOPE: "<<contLimite<<endl;
+		system("cls");
+		
+		gotoxy(48,1); printf("MEMORIA DE PROCESAMIENTO");cout<<endl;
+ 	 	gotoxy(1,3);printf("LA SIGUIENTE TAREA SE CREARA EN: "); cout<<ReturnTime(restaTiempo);gotoxy(80,3);printf("TIEMPO TOTAL DE PROCESAMIENTO: ");cout<<ReturnTime(i)<<endl;
+ 	  	cout<<"------------------------------------------------------------------------------------------------------------------------"<<endl;
+ 	  	gotoxy(0,5);printf("|");gotoxy(15,5);printf("TAREAS EN ESPERA "); gotoxy(58,5);printf("|");gotoxy(80,5);printf("TAREAS EN PROCESAMIENTO ");cout<<endl;gotoxy(119,5);printf("|");
+ 	  	cout<<"------------------------------------------------------------------------------------------------------------------------"<<endl;
+ 	 	 for(int i=7;i<20;i++){
+ 	  		gotoxy(0,i);printf("|");
+   		 }
+   	 	for(int i=7;i<20;i++){
+ 	  		gotoxy(58,i);printf("|");
+   		 }
+   	 	for(int i=7;i<20;i++){
+ 	  		gotoxy(119,i);printf("|");
+   		 }
+   		 
+   		// Tareas En Espera
+	  	gotoxy(5,8);
+	  	numTareasCola=cola.returnTareasCola(cola.getInicio(),0);
+	  	switch(numTareasCola){
+	  		case 1:
+	  			gotoxy(5,8); cola.mostrar(cola.getNodo(cola.getInicio(),0,0));   
+	  			gotoxy(5,9); cout<<cola.mostrarTiempo(cola.getNodo(cola.getInicio(),0,0));   
+				  
+				  
+	  			break;
+	  		case 2:
+	  			
+	  			
+	  			gotoxy(28,8); printf("");
+	  			break;
+	  		case 3:
+	  			
+	  			break;
+	  		case 4:
+	  			
+	  			break;
+		  }
+	 	 gotoxy(5,9);  printf("");  gotoxy(28,9); printf("");
+      	gotoxy(5,11); printf("");  gotoxy(28,11); printf("");   
+      	gotoxy(5,12);  printf("");  gotoxy(28,12); printf("");
+      	gotoxy(5,14); printf(""); gotoxy(28,14); printf(""); 
+	 	 gotoxy(5,15);  printf("");  gotoxy(28,15); printf(""); 
+    	  gotoxy(5,17); printf(""); gotoxy(28,17); printf("");
+     	 gotoxy(5,18);     gotoxy(28,18); printf("");
+  			
+    	  // Tareas en Procesamiento
+    	  numTareasProcesamiento=lista.returnTareas(lista.getInicio(),0);
+     	 gotoxy(65,8); 
+     	 
+     	 	/*for(int i=0;i<numTareasProcesamiento;i++){
+     	 		
+			  }*/
+			  
+     	 switch(numTareasProcesamiento){
+     	 	case 1:
+     	 		gotoxy(65,8);
+     	 		 lista.mostrar(lista.getNodo(lista.getInicio(),0,0));
+    	  		gotoxy(65,9); 
+				 cout<<lista.mostrarTiempo(lista.getNodo(lista.getInicio(),0,0));
+    	  		break;
+    	  	case 2:
+    	  		gotoxy(65,8);
+				 lista.mostrar(lista.getNodo(lista.getInicio(),0,0));	
+    	  		gotoxy(65,9);
+				  cout<<lista.mostrarTiempo(lista.getNodo(lista.getInicio(),0,0)); 	
+    	  		gotoxy(94,8); 
+				  lista.mostrar(lista.getNodo(lista.getInicio(),1,0));
+				gotoxy(94,9);
+ 					cout<<lista.mostrarTiempo(lista.getNodo(lista.getInicio(),1,0));
+    	  		break;
+    	  	case 3:
+    	  		gotoxy(65,8); lista.mostrar(lista.getNodo(lista.getInicio(),0,0));		
+    	  		gotoxy(65,9); cout<<lista.mostrarTiempo(lista.getNodo(lista.getInicio(),0,0)); 	
+    	  		
+    	  		gotoxy(94,8); lista.mostrar(lista.getNodo(lista.getInicio(),1,0));
+    	  		gotoxy(94,9);cout<< lista.mostrarTiempo(lista.getNodo(lista.getInicio(),1,0));
+    	  		
+    	  		gotoxy(65,11); lista.mostrar(lista.getNodo(lista.getInicio(),2,0));
+    	  		gotoxy(65,12); cout<<lista.mostrarTiempo(lista.getNodo(lista.getInicio(),2,0));
+    	  		break;
+    	  	case 4:
+    	  		gotoxy(65,8); lista.mostrar(lista.getNodo(lista.getInicio(),0,0));		
+    	  		gotoxy(65,9); cout<<lista.mostrarTiempo(lista.getNodo(lista.getInicio(),0,0)); 	
+    	  		
+    	  		gotoxy(94,8); lista.mostrar(lista.getNodo(lista.getInicio(),1,0));
+    	  		gotoxy(94,9);cout<< lista.mostrarTiempo(lista.getNodo(lista.getInicio(),1,0));
+    	  		
+    	  		gotoxy(65,11); lista.mostrar(lista.getNodo(lista.getInicio(),2,0));
+    	  		gotoxy(65,12); cout<<lista.mostrarTiempo(lista.getNodo(lista.getInicio(),2,0));
+    	  		
+
+		  }
+     	  
+     	gotoxy(94,17);
+     	 cout<<endl;cout<<endl;
+    	 cout<<"------------------------------------------------------------------------------------------------------------------------"<<endl;
+    	
+		 if(lista.ram(0)>=7168){
+    	 	system("color 0F"); gotoxy(96,20); textcolor(4); printf("ALERTA: MEMORIA EN 90%%");
+    	 	contLimite++;
+			textcolor(7);
+    		cout<<endl; 
+		 }
+      	
 		
 		sleep(1);
 		loop(i+1,j);

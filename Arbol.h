@@ -25,7 +25,7 @@ class Arbol{
 			nuevo = nuevo->crear(id, proceso, memoria, tiempo, gestion);
 			
 
-			if (raiz == NULL) { //arbol vacÃ­o;
+			if (raiz == NULL) { //arbol vacío;
 				raiz = nuevo;
 			}else{
 				nextNodo(raiz, nuevo);
