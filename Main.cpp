@@ -209,24 +209,16 @@ void loop(int i, int j){
 				  
 	  			break;
 	  		case 2:
+	  			gotoxy(5,8); cola.mostrar(cola.getNodo(cola.getInicio(),0,0));   
+	  			gotoxy(5,9); cout<<cola.mostrarTiempo(cola.getNodo(cola.getInicio(),0,0));   
 	  			
-	  			
-	  			gotoxy(28,8); printf("");
+	  				gotoxy(28,8); cola.mostrar(cola.getNodo(cola.getInicio(),1,0));   
+	  			gotoxy(28,9); cout<<cola.mostrarTiempo(cola.getNodo(cola.getInicio(),1,0));   
 	  			break;
-	  		case 3:
-	  			
-	  			break;
-	  		case 4:
-	  			
-	  			break;
+	  	
 		  }
 	 	 gotoxy(5,9);  printf("");  gotoxy(28,9); printf("");
-      	gotoxy(5,11); printf("");  gotoxy(28,11); printf("");   
-      	gotoxy(5,12);  printf("");  gotoxy(28,12); printf("");
-      	gotoxy(5,14); printf(""); gotoxy(28,14); printf(""); 
-	 	 gotoxy(5,15);  printf("");  gotoxy(28,15); printf(""); 
-    	  gotoxy(5,17); printf(""); gotoxy(28,17); printf("");
-     	 gotoxy(5,18);     gotoxy(28,18); printf("");
+      	 gotoxy(28,18); printf("");
   			
     	  // Tareas en Procesamiento
     	  numTareasProcesamiento=lista.returnTareas(lista.getInicio(),0);
