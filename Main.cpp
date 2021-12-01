@@ -68,7 +68,7 @@ string name = "";
 // Memoria de cambio.
 int memo=0;
 
-// Gestión de cambio.
+// GestiÃ³n de cambio.
 int gest=0;
 
 // Memoria.
@@ -265,7 +265,8 @@ void loop(int i, int j){
     	  		gotoxy(65,11); lista.mostrar(lista.getNodo(lista.getInicio(),2,0));
     	  		gotoxy(65,12); cout<<lista.mostrarTiempo(lista.getNodo(lista.getInicio(),2,0));
     	  		
-
+			gotoxy(94,11); lista.mostrar(lista.getNodo(lista.getInicio(),3,0));
+    	  		gotoxy(94,12);cout<< lista.mostrarTiempo(lista.getNodo(lista.getInicio(),4,0));
 		  }
      	  
      	gotoxy(94,17);
