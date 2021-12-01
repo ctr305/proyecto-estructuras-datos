@@ -240,7 +240,7 @@ class Lista{
 				c=0;
 				while(aux!=NULL){
 					if(aux->i()==minimo){
-						++c;
+						c++;
 					}
 					aux = aux->obtenerApuntador();
 				}

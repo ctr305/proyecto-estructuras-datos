@@ -87,13 +87,13 @@ int main(){
 	
 	system("cls"); cout<<"RAM: "<<lista.ram(0)<<endl;
 	
-	
-	
 	cout<<"LISTA:"<<endl;
-	lista.mostrarToda(lista.getInicio());
+	lista.mostrarInformacion(lista.getInicio());
 	
 	cout<<"COLA:"<<endl;
-	cola.mostrar(cola.getInicio());
+	cola.mostrarInformacion(cola.getInicio());
+	
+	cout<<"CONTADOR TOPE: "<<contLimite<<endl;
 	
 	cout<<"\n"; system("pause"); system("cls");
 	cout<<"ARBOL:"<<endl;
@@ -149,45 +149,38 @@ void loop(int i, int j){
 			}
 			
 
-			if(lista.last()!=NULL && lista.menor()==i){	
+			if(!lista.listaVacia() && lista.menor()==i){	
 				for(int j=0;j<=lista.repeticiones(i);j++){
-					identi = lista.buscar(i)->getId();
-					name = lista.buscar(i)->getProceso();
-					memo = lista.buscar(i)->getMemoria();
-					tim = lista.buscar(i)->getTiempo();
-					gest = lista.buscar(i)->getGestion();
+					if(!lista.listaVacia()){
+						identi = lista.buscar(i)->getId();
+						name = lista.buscar(i)->getProceso();
+						memo = lista.buscar(i)->getMemoria();
+						tim = lista.buscar(i)->getTiempo();
+						gest = lista.buscar(i)->getGestion();
 				
-					arbol.agregar(identi,name,memo,tim, gest);
+						arbol.agregar(identi,name,memo,tim, gest);
 					
-					lista.eliminar(i);
-				}
-					
+						lista.eliminar(i);
+					}
+				}		
 			}
 			
 			if(cola.getInicio()!=NULL){
-					memory = cola.getInicio()->getMemoria();
-					tim = cola.getInicio()->getTiempo();
+				memory = cola.getInicio()->getMemoria();
+				tim = cola.getInicio()->getTiempo();
 				
-					if(lista.ramEx(memory,RAM)){
-						identi = cola.getInicio()->getId();
-						name = cola.getInicio()->getProceso();
-						lista.insertar(identi,name,memory,tim,i);
-						cola.pop();
-					}
+				if(lista.ramEx(memory,RAM)){
+					identi = cola.getInicio()->getId();
+					name = cola.getInicio()->getProceso();
+					lista.insertar(identi,name,memory,tim,i);
+					cola.pop();
 				}
+			}
 			
 		}
 		
-		cout<<"RAM: "<<lista.ram(0)<<endl;
-	
-		cout<<"LISTA:"<<endl;
-		lista.mostrarInformacion(lista.getInicio());
-		
-		cout<<"COLA:"<<endl;
-		cola.mostrarInformacion(cola.getInicio());
 		restaTiempo=tiempo-i;
-		
-		cout<<"CONTADOR TOPE: "<<contLimite<<endl;
+
 		system("cls");
 		
 		gotoxy(48,1); printf("MEMORIA DE PROCESAMIENTO");cout<<endl;
